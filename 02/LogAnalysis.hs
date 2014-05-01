@@ -18,5 +18,5 @@ getMsg (x:y:zs)
 parse :: String -> [LogMessage]
 parse text  =
     let errors = lines text
-    in errors
+    in map (parseMessage) errors
 
