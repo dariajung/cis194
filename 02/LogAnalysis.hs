@@ -15,3 +15,8 @@ getMsg (x:y:zs)
     | x == "W"  = LogMessage Warning (read $ y :: Int) (unwords zs)
     | x == "E"  = LogMessage (Error (read $ y :: Int)) (read $ head zs :: Int) (unwords $ drop 1 zs)
 
+parse :: String -> [LogMessage]
+parse text  =
+    let errors = lines text
+    in errors
+
