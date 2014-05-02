@@ -22,5 +22,8 @@ parse text  =
 
 -- recursive insertion of BST
 insert :: LogMessage -> MessageTree -> MessageTree
--- first check if LogMessage is Unknown
--- ie: check (Unknown _) = don't do anything
+-- In case of Unknown error, return original tree
+insert (Unknown _) tree = tree
+-- If the LogMessage being inserted is the first,
+-- make it the root and its left and right trees Leaves
+insert log@(LogMessage _ _ _) (Leaf) = Node Leaf log Leaf  
