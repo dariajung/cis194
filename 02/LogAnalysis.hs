@@ -20,3 +20,7 @@ parse text  =
     let errors = lines text
     in map (parseMessage) errors
 
+-- recursive insertion of BST
+insert :: LogMessage -> MessageTree -> MessageTree
+-- first check if LogMessage is Unknown
+-- ie: check (Unknown _) = don't do anything
