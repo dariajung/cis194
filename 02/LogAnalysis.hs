@@ -26,4 +26,4 @@ insert :: LogMessage -> MessageTree -> MessageTree
 insert (Unknown _) tree = tree
 -- If the LogMessage being inserted is the first,
 -- make it the root and its left and right trees Leaves
-insert log@(LogMessage _ _ _) (Leaf) = Node Leaf log Leaf  
+insert msg@(LogMessage _ _ _) (Leaf) = Node Leaf msg Leaf  
