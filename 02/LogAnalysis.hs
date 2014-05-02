@@ -27,3 +27,8 @@ insert (Unknown _) tree = tree
 -- If the LogMessage being inserted is the first,
 -- make it the root and its left and right trees Leaves
 insert msg@(LogMessage _ _ _) (Leaf) = Node Leaf msg Leaf  
+insert msg@(LogMessage _ n _) (Node l current@(LogMessage _ x _) r) = case compare n x of
+    GT  -> Node l current (insert msg r)
+    _   -> Node (insert msg l) current r 
+    
+    
