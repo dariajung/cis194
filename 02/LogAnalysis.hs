@@ -31,4 +31,6 @@ insert msg@(LogMessage _ n _) (Node l current@(LogMessage _ x _) r) = case compa
     GT  -> Node l current (insert msg r)
     _   -> Node (insert msg l) current r 
     
-    
+build :: [LogMessage] -> MessageTree    
+build []        = Leaf
+build (x:xs)    = insert x (build xs)
