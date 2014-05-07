@@ -38,3 +38,14 @@ build (x:xs)    = insert x (build xs)
 inOrder :: MessageTree -> [LogMessage]
 inOrder (Leaf)  = []
 inOrder (Node l current r) = inOrder l ++ current : inOrder r
+
+whatWentWrong :: [LogMessage] -> [String]
+whatWentWrong [] = []
+whatWentWrong messages  = filterErrors messages
+
+filterErrors :: [LogMessage] -> [String]
+filterErrors [] = []
+filterErrors ((LogMessage (Error n) _ s):xs)
+    | n > 49    = s : filterErrors xs 
+    | otherwise = filterErrors xs
+filterErrors ((LogMessage _ _ _): xs) = filterErrors xs
