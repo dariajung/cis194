@@ -36,3 +36,5 @@ build []        = Leaf
 build (x:xs)    = insert x (build xs)
 
 inOrder :: MessageTree -> [LogMessage]
+inOrder (Leaf)  = []
+inOrder (Node l current r) = inOrder l ++ current : inOrder r
