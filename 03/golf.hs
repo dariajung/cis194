@@ -1,7 +1,8 @@
 module Golf where
 
---skip :: [a] -> [[a]]
+skips :: [a] -> [[a]]
+skips xs = map (every xs) [1..(length xs)]
 
-every n xs = case drop (n-1) xs of
-              (y:ys) -> y : every n ys
+every xs n = case drop (n-1) xs of
+              (y:ys) -> y : every ys n 
               [] -> []
