@@ -8,3 +8,8 @@ every xs n = case drop (n-1) xs of
               [] -> []
 
 localMaxima :: [Integer] -> [Integer]
+localMaxima [] = []
+localMaxima (x:list@(y:z:zs))
+    | x < y && (z) < y     = y : localMaxima list 
+    | otherwise             = localMaxima list 
+localMaxima (_:x) = []
