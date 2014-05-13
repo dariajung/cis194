@@ -14,7 +14,12 @@ localMaxima (x:list@(y:z:zs))
     | otherwise             = localMaxima list 
 localMaxima (_:x) = []
 
---histograph :: [Integer] -> String
+--histogram :: [Integer] -> String
+histogram xs
+            | 
+            where freq@(y:ys) = map (\x -> instances x xs) [0..9]
+
+-- maybe a draw function?
 
 instances x [] = 0 
 instances x (y:ys) 
