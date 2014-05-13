@@ -13,3 +13,10 @@ localMaxima (x:list@(y:z:zs))
     | x < y && (z) < y     = y : localMaxima list 
     | otherwise             = localMaxima list 
 localMaxima (_:x) = []
+
+--histograph :: [Integer] -> String
+
+instances x [] = 0 
+instances x (y:ys) 
+    | x == y    = 1 + (instances x ys)
+    | otherwise = instances x ys
