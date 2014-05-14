@@ -16,7 +16,7 @@ localMaxima (x:list@(y:z:zs))
     | otherwise             = localMaxima list 
 localMaxima (_:x) = []
 
---histogram :: [Integer] -> String
+histogram :: [Integer] -> String
 histogram xs =
              let freq@(y:ys) = map (\x -> instances x xs) [0..9]
                  stars = map (\x -> dup x (maximum freq)) freq
