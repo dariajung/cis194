@@ -14,17 +14,17 @@ localMaxima (x:list@(y:z:zs))
     | otherwise             = localMaxima list 
 localMaxima (_:x) = []
 
-histogram :: [Integer] -> String
+--histogram :: [Integer] -> String
 histogram xs =
              let freq@(y:ys) = map (\x -> instances x xs) [0..9]
-             in (draw freq ++ "\n") ++ "==========\n0123456789\n"
+                 stars = map (\x -> dup x (maximum freq)) freq
+--             in (draw freq ++ "\n") ++ "==========\n0123456789\n"
+               in stars
 
--- maybe a draw function?
-draw [] = ""
-draw list@(x:xs)
-    | x > 0   = "*" ++ draw xs
-    | otherwise  = " " ++ draw xs
-
+dup x max
+    | x > 0     = replicate x "*" ++ replicate (max - x) " "
+    | otherwise = replicate max " "
+    
 instances x [] = 0 
 instances x (y:ys) 
     | x == y    = 1 + (instances x ys)
