@@ -1,5 +1,7 @@
 module Golf where
 
+import qualified Data.List as List
+
 skips :: [a] -> [[a]]
 skips xs = map (every xs) [1..(length xs)]
 
@@ -18,8 +20,7 @@ localMaxima (_:x) = []
 histogram xs =
              let freq@(y:ys) = map (\x -> instances x xs) [0..9]
                  stars = map (\x -> dup x (maximum freq)) freq
---             in (draw freq ++ "\n") ++ "==========\n0123456789\n"
-               in stars
+             in printOut (List.transpose stars) ++ "\n==========\n0123456789\n"
 
 dup x max
     | x > 0     = replicate x "*" ++ replicate (max - x) " "
@@ -29,3 +30,6 @@ instances x [] = 0
 instances x (y:ys) 
     | x == y    = 1 + (instances x ys)
     | otherwise = instances x ys
+
+printOut [] = "\n"
+printOut (x:xs) = printOut xs ++ "\n" ++ concat x
