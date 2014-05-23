@@ -6,6 +6,8 @@ data Tree a = Leaf
 -- foldTree, insertNode, and height (of tree)
 -- foldTree :: [a] -> Tree a
 
+insert a (Node n left current right)
+    |
 
 height :: Tree a -> Integer
 height Leaf = 0
