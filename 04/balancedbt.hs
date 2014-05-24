@@ -2,9 +2,10 @@ data Tree a = Leaf
     | Node Integer (Tree a) a (Tree a)
     deriving (Show, Eq)
 
--- break this up into three parts:
--- foldTree, insertNode, and height (of tree)
--- foldTree :: [a] -> Tree a
+foldTree :: [a] -> Tree a
+foldTree = foldr (\x tree -> insert x tree) Leaf
+
+insert a Leaf = Node 0 Leaf a Leaf
 
 insert a (Node n left current right)
     | h1 > h2   = Node n left current (insert a right)
