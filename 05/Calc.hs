@@ -16,3 +16,16 @@ eval (Mul x y) = eval x * eval y
 
 evalStr :: String -> Maybe Integer
 evalStr str = evalMaybe (parseExp Lit Add Mul str)
+
+reify :: ExprT -> ExprT
+reify = id
+
+class Expr a where 
+    lit :: Integer -> a
+    add :: a -> a -> a
+    mul :: a -> a -> a
+
+instance Expr ExprT where 
+    lit x = Lit x
+    add x y = Add x y
+    mul x y = Mul x y
