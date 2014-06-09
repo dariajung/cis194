@@ -1,7 +1,11 @@
+{-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE FlexibleInstances #-}
+
 module Calc where
 
 import ExprT
 import Parser
+import qualified StackVM as VM
 
 evalMaybe :: Maybe ExprT -> Maybe Integer
 evalMaybe (Just (Lit x)) = Just x
@@ -53,6 +57,14 @@ instance Expr Mod7 where
     add (Mod7 x) (Mod7 y) = Mod7 ((x + y) `mod` 7)
     mul (Mod7 x) (Mod7 y) = Mod7 ((x * y) `mod` 7)
 
+instance Expr VM.Program where
+    lit x = [VM.PushI x]
+    add x y = x ++ y ++ [VM.Add]
+    mul x y = x ++ y ++ [VM.Mul]
+
+compile :: String -> Maybe VM.Program
+compile str = parseExp lit add mul str
+
 testExp :: Expr a => Maybe a
 testExp = parseExp lit add mul "(3 * -4) + 5"
 
@@ -60,4 +72,4 @@ testInteger = testExp :: Maybe Integer
 testBool = testExp :: Maybe Bool
 testMM = testExp :: Maybe MinMax
 testSat = testExp :: Maybe Mod7
-
+testProgram = testExp :: Maybe VM.Program
