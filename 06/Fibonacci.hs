@@ -39,5 +39,10 @@ nats = streamFromSeed (+1) 0
 interleaveStreams :: Stream a -> Stream a -> Stream a
 interleaveStreams (x :< xs) ys = x :< interleaveStreams ys xs
 
---ruler :: Stream Integer
---ruler = 
+ruler :: Stream Integer
+ruler = let a = streamRepeat 1
+            b = streamRepeat 2
+            c = streamFromSeed (+1) 3
+            d = streamRepeat 0
+        in interleaveStreams d (interleaveStreams a (interleaveStreams b c))
+
