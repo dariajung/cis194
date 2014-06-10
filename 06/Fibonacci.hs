@@ -19,7 +19,7 @@ memoized_fib =
 data Stream a = a :< (Stream a)
 
 instance (Show a) => Show (Stream a) where
-    show (a :< b) = show a ++ show (b)
+    show (a :< b) = show (take 20 (streamToList (a :< b)))
 
 streamToList :: Stream a -> [a]
 streamToList (x :< xs) = x : streamToList xs
