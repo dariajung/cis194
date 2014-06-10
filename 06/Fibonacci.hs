@@ -15,3 +15,14 @@ memoized_fib =
         fib 1 = 1
         fib n = memoized_fib (n - 2) + memoized_fib (n - 1)
     in  (map fib [0 ..] !!)
+
+data Stream a = a :< (Stream a)
+-- Type  -- Constructor -- Type
+--data Stream a = Stream a (Stream a)
+
+instance (Show a) => Show (Stream a) where
+    show (a :< b) = show a ++ show (b)
+
+streamToList :: Stream a -> [a]
+streamToList (x :< xs) = x : streamToList xs
+
