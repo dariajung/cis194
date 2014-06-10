@@ -35,3 +35,9 @@ streamFromSeed fn x = x :< streamFromSeed fn (fn x)
 
 nats :: Stream Integer
 nats = streamFromSeed (+1) 0
+
+interleaveStreams :: Stream a -> Stream a -> Stream a
+interleaveStreams (x :< xs) ys = x :< interleaveStreams xs ys
+
+--ruler :: Stream Integer
+--ruler = 
