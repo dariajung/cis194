@@ -17,8 +17,6 @@ memoized_fib =
     in  (map fib [0 ..] !!)
 
 data Stream a = a :< (Stream a)
--- Type  -- Constructor -- Type
---data Stream a = Stream a (Stream a)
 
 instance (Show a) => Show (Stream a) where
     show (a :< b) = show a ++ show (b)
