@@ -37,7 +37,7 @@ nats :: Stream Integer
 nats = streamFromSeed (+1) 0
 
 interleaveStreams :: Stream a -> Stream a -> Stream a
-interleaveStreams (x :< xs) ys = x :< interleaveStreams xs ys
+interleaveStreams (x :< xs) ys = x :< interleaveStreams ys xs
 
 --ruler :: Stream Integer
 --ruler = 
