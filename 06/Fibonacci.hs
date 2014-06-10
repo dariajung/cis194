@@ -32,3 +32,6 @@ streamMap fn (x :< xs) = fn x :< streamMap fn xs
 
 streamFromSeed :: (a -> a) -> a -> Stream a
 streamFromSeed fn x = x :< streamFromSeed fn (fn x)
+
+nats :: Stream Integer
+nats = streamFromSeed (+1) 0
