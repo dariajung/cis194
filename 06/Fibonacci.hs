@@ -29,3 +29,6 @@ streamRepeat x = x :< streamRepeat x
 
 streamMap :: (a -> b) -> Stream a -> Stream b
 streamMap fn (x :< xs) = fn x :< streamMap fn xs
+
+streamFromSeed :: (a -> a) -> a -> Stream a
+streamFromSeed fn x = x :< streamFromSeed fn (fn x)
