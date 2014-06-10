@@ -24,3 +24,6 @@ instance (Show a) => Show (Stream a) where
 streamToList :: Stream a -> [a]
 streamToList (x :< xs) = x : streamToList xs
 
+streamRepeat :: a -> Stream a
+streamRepeat x = x :< streamRepeat x
+
