@@ -27,3 +27,5 @@ streamToList (x :< xs) = x : streamToList xs
 streamRepeat :: a -> Stream a
 streamRepeat x = x :< streamRepeat x
 
+streamMap :: (a -> b) -> Stream a -> Stream b
+streamMap fn (x :< xs) = fn x :< streamMap fn xs
