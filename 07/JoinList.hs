@@ -32,11 +32,17 @@ _ !!? i | i < 0 = Nothing
 indexJ :: (Sized b, Monoid b) => Int -> JoinList b a -> Maybe a
 --indexJ _ Empty = Nothing
 indexJ 0 (Single m a) = Just a
-indexJ n (Single m a) = Nothing
+indexJ _ (Single m a) = Nothing
 indexJ 0 (Append m jl1 jl2) = indexJ 0 jl1
+
+indexJ n (Append m jl1@(Single m1 _) jl2)
+    | n >= (getSize $ size m)           = Nothing
+    | n < (getSize $ size m1)           = indexJ n jl1
+    | otherwise                         = indexJ (n - (getSize $ size m1)) jl2
+
 indexJ n (Append m jl1@(Append m1 _ _) jl2)
     | n >= (getSize $ size m)           = Nothing
     | n < (getSize $ size m1)           = indexJ n jl1
-    | otherwise                         = indexJ ((getSize $ size m) - n) jl2
+    | otherwise                         = indexJ (n - (getSize $ size m1)) jl2
 
 
