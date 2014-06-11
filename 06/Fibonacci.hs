@@ -1,3 +1,5 @@
+{-# LANGUAGE FlexibleInstances #-}
+
 fib :: Integer -> Integer
 fib 0 = 0
 fib 1 = 1
