@@ -10,7 +10,7 @@ data JoinList m a = Empty
 
 tag :: Monoid m => JoinList m a -> m
 tag (Single m a) = m
-tag (Append m jl1 jl2) = m `mappend` tag (jl1) `mappend` tag (jl2)
+tag (Append m jl1 jl2) = tag (jl1) `mappend` tag (jl2)
 
 (+++) :: Monoid m => JoinList m a -> JoinList m a -> JoinList m a
 (+++) jl1 jl2 = Append (tag jl1 `mappend` tag jl2) jl1 jl2
