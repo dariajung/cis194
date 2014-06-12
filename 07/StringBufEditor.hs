@@ -1,5 +1,6 @@
 module Main where
 
+import Data.Monoid
 import StringBuffer
 import Editor
 

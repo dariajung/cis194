@@ -26,3 +26,4 @@ class Buffer b where
   -- | Compute the value of the buffer, i.e. the amount someone would
   --   be paid for publishing the contents of the buffer.
   value :: b -> Int
+

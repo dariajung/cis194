@@ -3,6 +3,7 @@ module JoinList where
 import Data.Monoid
 import Sized
 import Scrabble
+import Buffer
 
 data JoinList m a = Empty
     | Single m a
