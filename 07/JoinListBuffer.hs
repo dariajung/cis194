@@ -18,14 +18,16 @@ instance Buffer (JoinList (Score, Size) String) where
 
     line n Empty = Nothing
     line n buff  = indexJ n buff
-  
 
---  line n b     = safeIndex n (lines b)
+    -- replaceLine 
+
+    numLines j = length $ toString j
+    value j = scoreLine $ toString j
+
 --  replaceLine n l b = unlines . uncurry replaceLine' . splitAt n . lines $ b
 --      where replaceLine' pre [] = pre
 --            replaceLine' pre (_:ls) = pre ++ l:ls
---  numLines     = length . lines
---  value        = length . words
+
 
 safeIndex :: Int -> [a] -> Maybe a
 safeIndex n _ | n < 0 = Nothing
