@@ -63,6 +63,20 @@ dropJ n (Append m jl1@(Append m1 _ _) jl2)
     | n >= (getSize $ size m)        = Empty
     | otherwise                      = dropJ (n - (getSize $ size m1)) jl2
 
+-- jlToList (takeJ n jl) == take n (jlToList jl).
 
+takeJ :: (Sized b, Monoid b) => Int -> JoinList b a -> JoinList b a
+takeJ n jl | n <= 0 = Empty
+takeJ n jl@(Single _ _) | n >= 1 = jl
 
+takeJ n x@(Append m jl@(Single m1 _) jl2)
+    | n >= (getSize $ size m)   = x
+    | n == (getSize $ size m1)  = jl
+    | n < (getSize $ size m1)   = takeJ n jl
+    | otherwise                 = (+++) jl (takeJ (n - (getSize $ size m1)) jl2)
 
+takeJ n x@(Append m jl@(Append m1 _ _) jl2)
+    | n >= (getSize $ size m)   = x
+    | n == (getSize $ size m1)  = jl
+    | n < (getSize $ size m1)   = takeJ n jl
+    | otherwise                 = (+++) jl (takeJ (n - (getSize $ size m1)) jl2)
