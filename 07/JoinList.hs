@@ -46,3 +46,14 @@ indexJ n (Append m jl1@(Append m1 _ _) jl2)
     | otherwise                         = indexJ (n - (getSize $ size m1)) jl2
 
 
+-- jlToList (dropJ n jl) == drop n (jlToList jl)
+
+dropJ :: (Sized b, Monoid b) => Int -> JoinList b a -> JoinList b a
+dropJ 0 jl = jl
+dropJ _ (Single m a) = Empty
+
+
+
+
+
+
