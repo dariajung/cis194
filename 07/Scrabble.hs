@@ -22,5 +22,6 @@ score n
     | n `elem` "qzQZ"                   = Score 10
     | otherwise                         = Score 0
 
---scoreString :: String -> Score
---scoreString
+scoreString :: String -> Score
+scoreString "" = Score 0
+scoreString (x:xs) = score x `mappend` scoreString xs
