@@ -8,5 +8,4 @@ glCons person@(Emp { empFun = y } ) gl@(GL list fun) = GL (person : list) (y + f
 moreFun :: GuestList -> GuestList -> GuestList
 moreFun l@(GL e f) l'@(GL e' f') 
     | f > f'    = l
-    | f < f'    = l'
-    | otherwise = l
+    | otherwise = l'
