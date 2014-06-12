@@ -28,7 +28,6 @@ instance Buffer (JoinList (Score, Size) String) where
 --      where replaceLine' pre [] = pre
 --            replaceLine' pre (_:ls) = pre ++ l:ls
 
-
 safeIndex :: Int -> [a] -> Maybe a
 safeIndex n _ | n < 0 = Nothing
 safeIndex _ []        = Nothing
