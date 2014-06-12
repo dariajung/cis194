@@ -30,7 +30,6 @@ _ !!? i | i < 0 = Nothing
 -- (indexJ i jl) == (jlToList jl !!? i)
 
 indexJ :: (Sized b, Monoid b) => Int -> JoinList b a -> Maybe a
---indexJ _ Empty = Nothing
 indexJ 0 (Single m a) = Just a
 indexJ _ (Single m a) = Nothing
 indexJ 0 (Append m jl1 jl2) = indexJ 0 jl1
@@ -49,10 +48,20 @@ indexJ n (Append m jl1@(Append m1 _ _) jl2)
 -- jlToList (dropJ n jl) == drop n (jlToList jl)
 
 dropJ :: (Sized b, Monoid b) => Int -> JoinList b a -> JoinList b a
-dropJ 0 jl = jl
-dropJ _ (Single m a) = Empty
+dropJ n jl | n <= 0 = jl
+dropJ _ Empty = Empty
+dropJ 1 (Single _ _) = Empty
+dropJ 1 (Append _ (Single _ _) jl2) = jl2
 
+dropJ n (Append m jl1@(Single m1 _) jl2)
+    | n == (getSize $ size m1)          = jl2
+    | n >= (getSize $ size m)           = Empty
+    | otherwise                         = dropJ (n - (getSize $ size m1)) jl2
 
+dropJ n (Append m jl1@(Append m1 _ _) jl2)
+    | n < (getSize $ size m1)        = (+++) (dropJ n jl1) jl2
+    | n >= (getSize $ size m)        = Empty
+    | otherwise                      = dropJ (n - (getSize $ size m1)) jl2
 
 
 
