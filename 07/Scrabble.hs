@@ -23,3 +23,4 @@ score n
     | otherwise                         = Score 0
 
 --scoreString :: String -> Score
+--scoreString

@@ -9,6 +9,7 @@ data JoinList m a = Empty
     deriving (Eq, Show)
 
 tag :: Monoid m => JoinList m a -> m
+tag Empty = mempty
 tag (Single m a) = m
 tag (Append m jl1 jl2) = tag (jl1) `mappend` tag (jl2)
 
@@ -53,11 +54,6 @@ dropJ _ Empty = Empty
 dropJ 1 (Single _ _) = Empty
 dropJ 1 (Append _ (Single _ _) jl2) = jl2
 
-dropJ n (Append m jl1@(Single m1 _) jl2)
-    | n == (getSize $ size m1)          = jl2
-    | n >= (getSize $ size m)           = Empty
-    | otherwise                         = dropJ (n - (getSize $ size m1)) jl2
-
 dropJ n (Append m jl1@(Append m1 _ _) jl2)
     | n < (getSize $ size m1)        = (+++) (dropJ n jl1) jl2
     | n >= (getSize $ size m)        = Empty
@@ -67,6 +63,7 @@ dropJ n (Append m jl1@(Append m1 _ _) jl2)
 
 takeJ :: (Sized b, Monoid b) => Int -> JoinList b a -> JoinList b a
 takeJ n jl | n <= 0 = Empty
+takeJ _ Empty = Empty
 takeJ n jl@(Single _ _) | n >= 1 = jl
 
 takeJ n x@(Append m jl@(Single m1 _) jl2)
