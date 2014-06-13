@@ -51,7 +51,3 @@ data GuestList = GL [Employee] Fun
 
 instance Ord GuestList where
   compare (GL _ f1) (GL _ f2) = compare f1 f2
-
-instance Monoid GuestList where 
-  mempty = GL [] 0
-  mappend (GL emp fun) (GL emp2 fun2) = GL (emp ++ emp2) (fun + fun2) 
