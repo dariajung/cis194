@@ -2,8 +2,13 @@ module Party where
 
 import Employee
 import Data.Tree
-import Data.List (foldl)
+import Data.List (foldl, sort)
 import Data.Monoid
+
+import System.IO  
+import Control.Monad
+
+import Data.Char(toUpper)
 
 glCons :: Employee -> GuestList -> GuestList
 glCons person@(Emp { empFun = y } ) gl@(GL list fun) = GL (person : list) (y + fun)
@@ -44,3 +49,11 @@ without [] = GL [] 0
 
 maxFun :: Tree Employee -> GuestList
 maxFun = uncurry moreFun . treeFold nextLevel
+
+showGL :: GuestList -> IO ()
+showGL (GL employees fun) = putStrLn ("Total fun: " ++ show fun) >>
+                            mapM_ putStrLn (sort $ map empName employees)
+
+main :: IO ()
+main = readFile "company.txt" >>= (showGL . maxFun . read)
+
