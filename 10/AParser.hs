@@ -64,7 +64,14 @@ parseName = Parser f
             where a = ['a'..'z'] ++ ['A'..'Z']
                   checkStr str = and $ map (`elem` a) str
 
---parsePhone :: Parser String
+parsePhone :: Parser String
+parsePhone = Parser f
+    where 
+        f number
+            | checkNum number = Just (number, "")
+            | otherwise = Nothing
+            where a = ['0'..'9'] ++ ['-', '.', '(', ')']
+                  checkNum str = and $ map (`elem` a) str
 
 ------------------------------------------------------------
 -- Your code goes below here
