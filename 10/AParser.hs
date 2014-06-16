@@ -48,9 +48,23 @@ posInt :: Parser Integer
 posInt = Parser f
   where
     f xs
-      | null ns   = Nothing
-      | otherwise = Just (read ns, rest)
-      where (ns, rest) = span isDigit xs
+        | null ns   = Nothing
+        | otherwise = Just (read ns, rest)
+        where (ns, rest) = span isDigit xs
+
+type Name = String
+data Employee = Emp { name :: Name, phone :: String }
+
+parseName :: Parser Name
+parseName = Parser f
+    where 
+        f name
+            | checkStr name = Just (name, "")
+            | otherwise = Nothing
+            where a = ['a'..'z'] ++ ['A'..'Z']
+                  checkStr str = and $ map (`elem` a) str
+
+--parsePhone :: Parser String
 
 ------------------------------------------------------------
 -- Your code goes below here
