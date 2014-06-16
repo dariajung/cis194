@@ -1,6 +1,4 @@
-{- CIS 194 HW 10
-   due Monday, 1 April
--}
+{-# LANGUAGE TupleSections #-}
 
 module AParser where
 
@@ -65,4 +63,12 @@ instance Functor Parser where
   fmap f parser = Parser (fmap (first f) . runParser parser)
 
 instance Applicative Parser where
-  
+  pure x = Parser $ \s -> Just (x, s)
+  -- (<*>) :: Parser (a -> b) -> Parser a -> Parser b
+  p <*> q = Parser $ \s ->
+            let 
+              Just (f, s') = runParser p s
+              Just (x, s'') = runParser q s'
+            in Just (f x, s')
+
+
