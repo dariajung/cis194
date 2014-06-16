@@ -55,5 +55,5 @@ showGL (GL employees fun) = putStrLn ("Total fun: " ++ show fun) >>
                             mapM_ putStrLn (sort $ map empName employees)
 
 main :: IO ()
-main = readFile "company.txt" >>= (showGL . maxFun . read)
+main = readFile "company.txt" >>= showGL . maxFun . read
 
