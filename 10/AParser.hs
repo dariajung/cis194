@@ -6,6 +6,8 @@ import           Control.Applicative
 
 import           Data.Char
 
+import           Data.List.Split
+
 -- A parser for a value of type a is a function which takes a String
 -- represnting the input to be parsed, and succeeds or fails; if it
 -- succeeds, it returns the parsed value along with the remainder of
@@ -95,3 +97,19 @@ instance Applicative Parser where
 
 abParser :: Parser (Char, Char)
 abParser = (,) <$> char 'a' <*> char 'b'
+
+abParser_ :: Parser ()
+abParser_ = pure (const ()) <*> abParser
+
+intPair :: Parser [Integer]
+intPair = (\a _ b -> [a, b]) <$> posInt <*> char ' ' <*> posInt 
+
+--instance Alternative Maybe where
+--    empty = Nothing
+--    Nothing <|> p = p
+--    Just x <|> _ = Just x
+
+instance Alternative Parser where
+    empty = Parser $ const Nothing
+    p <|> q = Parser $ \s -> runParser p s <|> runParser q s
+
