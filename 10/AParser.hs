@@ -113,6 +113,8 @@ instance Alternative Parser where
     empty = Parser $ const Nothing
     p <|> q = Parser $ \s -> runParser p s <|> runParser q s
 
-intOrUppercase :: Parser ()
-intOrUppercase = pure (const ()) <*> posInt <|> pure (const ()) <*> (satisfy isUpper)
+--intOrUppercase :: Parser ()
+--intOrUppercase = pure (const ()) <*> posInt <|> pure (const ()) <*> (satisfy isUpper)
+
+intOrUppercase = pure (const ()) <*> (satisfy isUpper) <|> pure (const ()) <*> posInt
 
