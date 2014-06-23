@@ -48,8 +48,24 @@ battle bf = do
 -- to battle until there are no defenders remaining, or fewer than two attackers
 invade :: Battlefield -> Rand StdGen Battlefield
 invade bf = do
-    if defenders bf == 0 || attackers bf < 2
+    if defenders bf == 0 || attackers bf < 2 -- if conditions are met, just return the battlefield
     then return bf
-    else battle bf >>= invade
+    else battle bf >>= invade -- otherwise keep battling
+
+
+attackerWins :: Battlefield -> Double
+attackerWins bf =
+    if (defenders bf == 0 && attackers bf > 1) -- attacker wins if defending army has 0 units and attacking army has > 1 unit 
+    then 1.0
+    else 0.0
+
+-- Runs invade 1000 times, and uses the results to compute a Double 
+-- between 0 and 1 representing the estimated probability that
+-- the attacking army will completely destroy the defending army.
+successProb :: Battlefield -> Rand StdGen Double
+successProb bf = do
+    battles <- replicateM 1000 (invade bf) -- simulate 1000 invasions
+    let wins = foldl1 (+) (map (attackerWins) battles)
+    return (wins / 1000.0)
 
 
