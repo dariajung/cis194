@@ -42,3 +42,14 @@ battle bf = do
         attackersLeft = length $ filter (uncurry (>)) pairs -- attacker wins if higher die value
         defendersLeft = length $ filter (uncurry (>=)) pairs -- defender wins if higher or equal value
     return (Battlefield (attackersLeft + 1) (defends - attacks + defendersLeft))
+
+
+-- Simulates an entire invasion attempt, that is, repeated calls
+-- to battle until there are no defenders remaining, or fewer than two attackers
+invade :: Battlefield -> Rand StdGen Battlefield
+invade bf = do
+    if defenders bf == 0 || attackers bf < 2
+    then return bf
+    else battle bf >>= invade
+
+
